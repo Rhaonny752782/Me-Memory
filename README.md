@@ -1,6 +1,6 @@
 # Me-Memory — Pokémon 16-bit
 
-Jogo da memória com visual retrô inspirado em jogos portáteis 16-bit, desenvolvido com HTML, CSS e JavaScript puro.
+Jogo da memória com visual retrô inspirado nos jogos portáteis clássicos, desenvolvido com HTML, CSS e JavaScript puro.
 
 ## Como executar localmente
 
@@ -17,11 +17,13 @@ python -m http.server 8000
 Acesse http://localhost:8000.
 
 ## Recursos
+
 - Três dificuldades: 8, 10 ou 12 pares.
 - Cartas com animação em passos e verso inspirado em Poké Bola.
+- Sprites pixel art de Pokémon.
 - Contador de movimentos, cronômetro e pares encontrados.
 - Recordes salvos no navegador por dificuldade.
 - Interface responsiva e acessível por teclado.
 - Sem dependências de instalação.
 
-> O jogo usa símbolos Unicode para representar os tipos/ícones dos Pokémon; a estética pixelada é feita em CSS.
+**Observação:** os sprites são carregados do repositório público PokeAPI; é necessária conexão com a internet para exibir as imagens. O restante do jogo roda localmente.
