@@ -1,0 +1,9 @@
+{
+  "name": "me-memory-pokemon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Jogo da memória Pokémon 16-bit",
+  "scripts": {
+    "build": "node build.js"
+  }
+}
