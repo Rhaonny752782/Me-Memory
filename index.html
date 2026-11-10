@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17202b">
+<title>Me-Memory · Pokémon 16-bit</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+:root{--ink:#171b26;--navy:#172638;--blue:#2c5270;--cream:#fff7df;--red:#e94343;--yellow:#ffd84d;--green:#5cbd75;--pixel:4px}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--cream);font-family:'VT323',monospace;font-size:22px;background-color:#24374b;background-image:linear-gradient(#ffffff0c 1px,transparent 1px),linear-gradient(90deg,#ffffff0c 1px,transparent 1px);background-size:16px 16px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(180deg,#101a2acc,#172638dd)}
+main{position:relative;width:min(940px,94vw);margin:auto;padding:28px 0 45px}
+header{display:flex;align-items:center;justify-content:space-between;gap:14px;border:4px solid var(--ink);outline:4px solid var(--cream);background:var(--navy);padding:12px 16px;box-shadow:8px 8px 0 #0b101a;margin-bottom:26px}
+.brand{display:flex;align-items:center;gap:12px}.brand h1{font:14px 'Press Start 2P',monospace;line-height:1.7;margin:0;color:var(--yellow);text-shadow:3px 3px #9b3434}.brand p{margin:2px 0 0;color:#b9d7e9;font-size:20px}.mini-ball{width:38px;height:38px;border:4px solid var(--ink);border-radius:50%;background:linear-gradient(to bottom,var(--red) 0 43%,var(--ink) 43% 56%,var(--cream) 56%);position:relative;box-shadow:inset -4px -4px #0002}.mini-ball:after{content:"";position:absolute;width:10px;height:10px;border:4px solid var(--ink);border-radius:50%;background:var(--cream);left:7px;top:8px}
+.header-tag{font:8px 'Press Start 2P';color:#a9e7bf;text-align:right;line-height:2}
+.hero{text-align:center;margin:24px 0}.hero h2{font:clamp(16px,3vw,22px) 'Press Start 2P';line-height:1.8;color:var(--yellow);text-shadow:4px 4px #9b3434;margin:0 0 10px}.hero p{margin:0;color:#d6e4ed;font-size:24px}
+.game{background:var(--cream);color:var(--ink);border:5px solid var(--ink);box-shadow:8px 8px 0 #0b101a;padding:18px;position:relative}
+.game:before{content:"";position:absolute;inset:5px;border:2px dashed #b6a98b;pointer-events:none}
+.toolbar{position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.stats{display:flex;gap:8px;flex-wrap:wrap}.stat{min-width:105px;padding:8px 11px;background:#dce7e8;border:3px solid var(--ink);box-shadow:3px 3px 0 #b7aa8b}.stat span{display:block;font:7px 'Press Start 2P';color:#526170;margin-bottom:7px}.stat strong{font:24px 'VT323';color:#172638}
+.controls{display:flex;gap:8px;flex-wrap:wrap}select,button{font:18px 'VT323';border:3px solid var(--ink);border-radius:0;padding:7px 11px;color:var(--ink);background:#fff;box-shadow:3px 3px 0 #b7aa8b;cursor:pointer}button.primary{background:var(--yellow);font-weight:bold}button:hover,select:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 #b7aa8b}button:focus-visible,select:focus-visible,.card:focus-visible{outline:3px dashed #1769aa;outline-offset:4px}
+.board{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:680px;margin:0 auto}
+.card{position:relative;aspect-ratio:1.12;border:0;padding:0;background:transparent;perspective:600px;cursor:pointer;box-shadow:none}
+.card-inner{position:absolute;inset:0;transition:transform .32s steps(5);transform-style:preserve-3d}
+.card.flipped .card-inner,.card.matched .card-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:grid;place-items:center;backface-visibility:hidden;border:4px solid var(--ink);box-shadow:4px 4px 0 #b7aa8b}
+.back{background:#d9e7ed;overflow:hidden}
+.back:before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,var(--red) 0 43%,var(--ink) 43% 56%,#fff 56%);border:0}
+.back:after{content:"";position:absolute;width:20px;height:20px;border:4px solid var(--ink);background:#fff;border-radius:50%;box-shadow:0 0 0 4px #ffffff80}
+.front{transform:rotateY(180deg);background:#fff9e9;font-size:clamp(35px,6vw,58px);image-rendering:pixelated}
+.matched .front{background:#d8f1d8;border-color:#277c4c;box-shadow:4px 4px 0 #8cbf91}
+.status{position:relative;text-align:center;min-height:28px;margin:18px 0 0;font-size:23px;color:#324b5c}.status strong{color:#b52f36}
+.footer{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;color:#c2d4e2;font-size:18px;margin-top:22px}
+@media(max-width:560px){main{padding-top:16px}header{padding:10px}.header-tag{display:none}.brand h1{font-size:11px}.game{padding:12px}.board{gap:8px}.face{border-width:3px}.stat{min-width:76px;padding:6px 8px}.stat span{font-size:6px}.controls{width:100%}.controls select,.controls button{flex:1}.toolbar{margin-bottom:12px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div class="brand"><div class="mini-ball" aria-hidden="true"></div><div><h1>ME-MEMORY</h1><p>Pokémon · edição 16-bit</p></div></div>
+ <div class="header-tag">POKÉDEX MEMORY<br>PLAYER 1 · READY</div>
+</header>
+<section class="hero"><h2>Escolha seu desafio!</h2><p>Vire as cartas e encontre todos os Pokémon em pares.</p></section>
+<section class="game" aria-label="Jogo da memória Pokémon">
+ <div class="toolbar">
+  <div class="stats" aria-live="polite">
+   <div class="stat"><span>MOVIMENTOS</span><strong id="moves">00</strong></div>
+   <div class="stat"><span>TEMPO</span><strong id="time">00:00</strong></div>
+   <div class="stat"><span>PARES</span><strong id="pairs">0/8</strong></div>
+  </div>
+  <div class="controls">
+   <select id="difficulty" aria-label="Dificuldade"><option value="8">INICIANTE · 8 PARES</option><option value="10">TREINADOR · 10 PARES</option><option value="12">MESTRE · 12 PARES</option></select>
+   <button class="primary" id="restart">↻ NOVO JOGO</button>
+  </div>
+ </div>
+ <div id="board" class="board" aria-label="Cartas Pokémon"></div>
+ <p id="status" class="status" role="status">★ A aventura vai começar. Encontre o primeiro par!</p>
+</section>
+<div class="footer"><span>◆ VISUAL RETRÔ 16-BIT</span><span>◆ SEU RECORDE FICA SALVO AQUI</span></div>
+</main>
+<script>
+(()=> {
+ const pokemon=['⚡','🔥','💧','🌱','👻','🐉','🐭','🦊','🐸','🦋','🐢','⭐'];
+ const board=document.querySelector('#board'),movesEl=document.querySelector('#moves'),timeEl=document.querySelector('#time'),pairsEl=document.querySelector('#pairs'),statusEl=document.querySelector('#status'),difficulty=document.querySelector('#difficulty');
+ let first=null,lock=false,moves=0,pairs=0,seconds=0,tick=null,started=false,deck=[];
+ const key=n=>'me-memory-pokemon-best-'+n;
+ const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+ const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+ function update(){movesEl.textContent=String(moves).padStart(2,'0');timeEl.textContent=fmt(seconds);pairsEl.textContent=pairs+'/'+deck.length/2}
+ function startClock(){if(started)return;started=true;tick=setInterval(()=>{seconds++;timeEl.textContent=fmt(seconds)},1000)}
+ function finish(){clearInterval(tick);const n=Number(difficulty.value),old=Number(localStorage.getItem(key(n))||0);let msg='Você completou a Pokédex em '+moves+' movimentos e '+fmt(seconds)+'!';if(!old||moves<old){localStorage.setItem(key(n),String(moves));msg+=' NOVO RECORDE! 🏆'}statusEl.innerHTML='<strong>VOCÊ VENCEU!</strong> '+msg}
+ function newGame(){clearInterval(tick);first=null;lock=false;moves=0;pairs=0;seconds=0;started=false;const count=Number(difficulty.value);deck=shuffle([...pokemon.slice(0,count),...pokemon.slice(0,count)]);board.style.gridTemplateColumns=count===10?'repeat(5,minmax(0,1fr))':'repeat(4,minmax(0,1fr))';board.innerHTML='';deck.forEach((symbol,i)=>{const b=document.createElement('button');b.className='card';b.type='button';b.setAttribute('aria-label','Carta '+(i+1)+', fechada');b.innerHTML='<span class="card-inner"><span class="face back" aria-hidden="true"></span><span class="face front" aria-hidden="true"></span></span>';b.querySelector('.front').textContent=symbol;b.dataset.symbol=symbol;b.addEventListener('click',()=>flip(b));board.appendChild(b)});update();statusEl.textContent='★ A aventura vai começar. Encontre o primeiro par!'}
+ function flip(card){if(lock||card===first||card.classList.contains('matched')||card.classList.contains('flipped'))return;startClock();card.classList.add('flipped');card.setAttribute('aria-label','Carta revelada: '+card.dataset.symbol);if(!first){first=card;return}moves++;update();if(first.dataset.symbol===card.dataset.symbol){first.classList.add('matched');card.classList.add('matched');first.disabled=card.disabled=true;first=null;pairs++;update();statusEl.textContent='◆ Muito bem! Você encontrou um par.';if(pairs===deck.length/2)finish()}else{lock=true;const previous=first;first=null;statusEl.textContent='Essa não! Tente outra combinação.';setTimeout(()=>{[previous,card].forEach(c=>{c.classList.remove('flipped');c.setAttribute('aria-label','Carta fechada')});lock=false},900)}}
+ document.querySelector('#restart').addEventListener('click',newGame);difficulty.addEventListener('change',newGame);newGame();
+})();
+</script>
+</body>
+</html>
